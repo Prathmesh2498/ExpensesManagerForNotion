@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.NoCopySpan;
 import android.util.Log;
 import android.view.View;
@@ -122,12 +123,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else{
-                tv.setText(result);
+
+                String sourceString = "<b>" + result + "</b> " ;
+                tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
                 Toast.makeText(MainActivity.this, "Record Deleted!\nPlease add again.", Toast.LENGTH_LONG).show();
             }
-
-
-
 
 
         }
