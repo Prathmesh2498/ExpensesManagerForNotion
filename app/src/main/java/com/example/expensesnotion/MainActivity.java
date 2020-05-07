@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             editTextString[0] = getData.getText().toString();
             Log.e("g",editTextString[0]);
             getData.setText("");
-            d[0] = editTextString[0].split(Pattern.quote("+"));
+            d[0] = editTextString[0].split(Pattern.quote(","));
 
             amount[0] = Integer.parseInt(d[0][1]);
 
@@ -123,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
                 tv.setText(result);
+                Toast.makeText(MainActivity.this, "Record Deleted!\nPlease add again.", Toast.LENGTH_LONG).show();
             }
 
 

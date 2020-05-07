@@ -12,7 +12,7 @@ def addRecord(Expense,Amount,Comment,Category):
     Date = datetime.datetime.now()
 
     # Obtain the `token_v2` value by inspecting your browser cookies on a logged-in session on Notion.so
-    client = NotionClient(token_v2="YOUR_V2_TOKEN_HERE")
+    client = NotionClient(token_v2="YOUR_URL_HERE")
     print("Client Connected..")
     cv = client.get_collection_view("YOUR_DATABASE_URL_HERE")
     print("Connected to db")
@@ -30,6 +30,13 @@ def addRecord(Expense,Amount,Comment,Category):
         return "Success"
     except Exception as e:
         s = str(e)
+        filter_params = [{
+            "property": "Expense",
+        }]
+        result = cv.build_query(filter=filter_params).execute()
+        print(result)
+        size = len(result)
+        result[size-1].remove()
         return s
 
 
