@@ -5,18 +5,26 @@ Created on Sat May  3 15:22:31 2020
 @author: Prathmesh D
 """
 
-
-def addRecord(Expense,Amount,Comment,Category):
+def addRecord(Expense,Amount,Comment,Category,v2,db):
     import datetime
     from notion.client import NotionClient
     Date = datetime.datetime.now()
 
     # Obtain the `token_v2` value by inspecting your browser cookies on a logged-in session on Notion.so
-    client = NotionClient(token_v2="YOUR_URL_HERE")
-    print("Client Connected..")
-    cv = client.get_collection_view("YOUR_DATABASE_URL_HERE")
-    print("Connected to db")
 
+    try:
+        client = NotionClient(token_v2=v2)
+        print("Client Connected..")
+    except:
+        s ="V2Error"
+        return s
+
+    try:
+        cv = client.get_collection_view(db)
+        print("Connected to db")
+    except:
+        s="dbError"
+        return s
 
     try:
         row = cv.collection.add_row()
@@ -38,9 +46,3 @@ def addRecord(Expense,Amount,Comment,Category):
         size = len(result)
         result[size-1].remove()
         return s
-
-
-
-
-
-

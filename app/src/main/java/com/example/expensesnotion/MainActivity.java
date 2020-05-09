@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
@@ -34,11 +37,30 @@ import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static final String SAVED_PREFERENCES = "com.example.expensesnotion.savedData";
+    SharedPreferences.Editor putEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE).edit();
+    SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
+
+    String v2_Token;
+    String db_URL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //IF KEY DOES NOT EXIST, IT RETURNS THE VALUE PARAM SO VALUE IS LIKE DEFAULT VALUE
+        Boolean  isInitialized = getEditor.getBoolean("Init",Boolean.FALSE);
+
+        if(!isInitialized){
+            //PUT DATA
+            putEditor.putBoolean("Init",Boolean.TRUE);
+            putEditor.commit();
+
+            Intent intent = new Intent(MainActivity.this,userDetails.class);
+            startActivityForResult(intent,2);
+        }
 
         Button submit = findViewById(R.id.button);
 
@@ -53,7 +75,28 @@ public class MainActivity extends AppCompatActivity {
 
 
    }
-    private static String viewSource(Context context, String[]d,int amount, Date date) throws IOException {
+
+   // Call Back method  to get the Message form other Activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        // check if the request code is same as what is passed  here it is 2
+        if(requestCode==2)
+        {
+            v2_Token = data.getStringExtra("TOKENv2");
+            db_URL = data.getStringExtra("DATABASE_URL");
+
+            putEditor.putString("v2_Token",v2_Token);
+            putEditor.putString("db_URL",db_URL);
+
+            putEditor.commit();
+        }
+    }
+
+
+
+    private static String viewSource(Context context, String[]d,int amount, Date date,String TOKEN_V2,String DB_URL) throws IOException {
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(context));
         }
@@ -85,6 +128,9 @@ public class MainActivity extends AppCompatActivity {
         final String editTextString[] = new String[1];
         final String filename= "Notion.py";
 
+        final String TOKEN_V2 = getEditor.getString("v2_Token", null);
+        final String DB_URL = getEditor.getString("db_URL", null);
+
         String returned_value;
         @Override
         protected void onPreExecute() {
@@ -105,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             try{
-                returned_value = viewSource(MainActivity.this, d[0], amount[0], date[0]);
+                returned_value = viewSource(MainActivity.this, d[0], amount[0], date[0], TOKEN_V2, DB_URL);
 
                 return returned_value;
             }catch (Exception e){
@@ -124,9 +170,25 @@ public class MainActivity extends AppCompatActivity {
             }
             else{
 
-                String sourceString = "<b>" + result + "</b> " ;
-                tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
-                Toast.makeText(MainActivity.this, "Record Deleted!\nPlease add again.", Toast.LENGTH_LONG).show();
+                if(result.equals("V2Error")){
+                    Toast.makeText(MainActivity.this, "Your V2 Token is wrong. Please Enter Details again!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this,userDetails.class);
+                    startActivityForResult(intent,2);
+
+
+                }
+                else if(result.equals("dbError")){
+                    Toast.makeText(MainActivity.this, "Your db URL is wrong. Please Enter Deatils again!", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(MainActivity.this,userDetails.class);
+                    startActivityForResult(intent,2);
+                }
+                else{
+                    String sourceString = "<b>" + result + "</b> " ;
+                    tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
+                    Toast.makeText(MainActivity.this, "Record Deleted!\nPlease add again.", Toast.LENGTH_LONG).show();
+                }
+
+
             }
 
 
