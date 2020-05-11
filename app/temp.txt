@@ -12,7 +12,7 @@ To get the database URL\n\n
 How can I obtain the v2 token?
 Please see the image below.
 
-You can read more about this project on my blog:
-<link1>
-<link2>
+You can read more about this project on my blog:\n\n
+https://medium.com/@prathu10/automating-notion-using-notion-py-fa0f2e8f089e\n\n
+https://medium.com/@prathu10/android-app-for-notion-automation-using-chaquopy-863e72fa4ecd\n\n
 

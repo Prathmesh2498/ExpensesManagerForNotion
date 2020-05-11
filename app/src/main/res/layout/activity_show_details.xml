@@ -56,10 +56,14 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/blogs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:autoLink="web"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:text="You can read more about this project on my blog:\n\n https://medium.com/@prathu10/automating-notion-using-notion-py-fa0f2e8f089e\n\n https://medium.com/@prathu10/android-app-for-notion-automation-using-chaquopy-863e72fa4ecd\n\n"
+                android:textSize="18sp" />
 
         </LinearLayout>
     </ScrollView>
