@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".userDetails">
+
+    <EditText
+        android:id="@+id/v2"
+        android:layout_width="308dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="234dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="452dp"
+        android:ems="10"
+        android:hint="Enter v2 token here"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/db"
+        android:layout_width="308dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="335dp"
+        android:ems="10"
+        android:hint="Enter database URL here"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/v2" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="136dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="138dp"
+        android:backgroundTint="#030404"
+        android:text="Submit"
+        android:textColor="#FF5722"
+        android:textColorLink="#050404"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/db" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="313dp"
+        android:layout_height="137dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="49dp"
+        android:layout_marginBottom="49dp"
+        android:text="\nThis app uses notion-py library of the pypi.org project. This library requires your v2 token. You can read more about it by tapping the read button above!"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
+
+    <Button
+        android:id="@+id/btnRead"
+        android:layout_width="300dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="49dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="62dp"
+        android:backgroundTint="#030404"
+        android:text="TAP ME FOR MORE INFO!"
+        android:textColor="#FF5722"
+        android:textColorLink="#050404"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

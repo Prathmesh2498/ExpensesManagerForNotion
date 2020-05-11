@@ -1,0 +1,18 @@
+Why should I submit my v2 token? \n
+The library this app uses is called notion-py which a freely available library on pypi.org.\n
+To connect to your notion account, you need to add your v2 token.\n
+You can read about it more here- pypi.org/projects/notion
+
+How do get the database url?
+To get the database URL\n\n
+1. Login to your Notion account\n
+2. Open the database that you want to update.\n
+3. Copy paste the whole link by double clicking on the address bar of the browser.\n
+
+How can I obtain the v2 token?
+Please see the image below.
+
+You can read more about this project on my blog:
+<link1>
+<link2>
+
