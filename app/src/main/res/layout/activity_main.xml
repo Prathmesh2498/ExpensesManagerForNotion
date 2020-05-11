@@ -58,4 +58,23 @@
         app:layout_constraintTop_toBottomOf="@+id/editText"
         app:layout_constraintVertical_bias="0.0" />
 
+    <Button
+        android:id="@+id/info"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="39dp"
+        android:layout_marginBottom="77dp"
+        android:backgroundTint="#030404"
+        android:fontFamily="@font/coming_soon"
+        android:text="For more info, TAP ME!"
+        android:textColor="#FF5722"
+        android:textColorLink="#050404"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,6 +10,8 @@ def addRecord(Expense,Amount,Comment,Category,v2,db):
     from notion.client import NotionClient
     Date = datetime.datetime.now()
 
+    print(v2)
+    print(db)
     # Obtain the `token_v2` value by inspecting your browser cookies on a logged-in session on Notion.so
 
     try:

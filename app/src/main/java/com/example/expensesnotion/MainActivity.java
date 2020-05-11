@@ -1,16 +1,11 @@
 package com.example.expensesnotion;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
-import android.text.NoCopySpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,45 +13,48 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
-import org.w3c.dom.Text;
-
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.regex.Pattern;
 
+import static java.lang.Boolean.TRUE;
+
 public class MainActivity extends AppCompatActivity {
-
     public static final String SAVED_PREFERENCES = "com.example.expensesnotion.savedData";
-    SharedPreferences.Editor putEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE).edit();
-    SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
 
-    String v2_Token;
-    String db_URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button info = findViewById(R.id.info);
+        final EditText getData = findViewById(R.id.editText);
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,ShowDetails.class);
+                startActivity(intent);
+            }
+        });
+
+        SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
+
+
 
         //IF KEY DOES NOT EXIST, IT RETURNS THE VALUE PARAM SO VALUE IS LIKE DEFAULT VALUE
         Boolean  isInitialized = getEditor.getBoolean("Init",Boolean.FALSE);
 
+
         if(!isInitialized){
-            //PUT DATA
-            putEditor.putBoolean("Init",Boolean.TRUE);
-            putEditor.commit();
 
             Intent intent = new Intent(MainActivity.this,userDetails.class);
             startActivityForResult(intent,2);
@@ -68,7 +66,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String editTextString;
+                int amount;
+                String d[];
+
+                editTextString = getData.getText().toString();
+                d=editTextString.split(",");
+                Boolean flag=Boolean.TRUE;
+                try {
+                    amount = Integer.parseInt(d[1]);
+                }catch(Exception e){
+                    Toast.makeText(MainActivity.this, "Please Enter a number for amount", Toast.LENGTH_LONG).show();
+                    flag=Boolean.FALSE;
+                }
+                if(flag){
                 new AsyncCaller().execute();
+                }
             }
         });
 
@@ -82,6 +95,11 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onActivityResult(requestCode, resultCode, data);
         // check if the request code is same as what is passed  here it is 2
+        SharedPreferences.Editor putEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE).edit();
+        SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
+
+        String v2_Token;
+        String db_URL;
         if(requestCode==2)
         {
             v2_Token = data.getStringExtra("TOKENv2");
@@ -89,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
             putEditor.putString("v2_Token",v2_Token);
             putEditor.putString("db_URL",db_URL);
-
+            putEditor.putBoolean("Init", TRUE);
             putEditor.commit();
         }
     }
@@ -105,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         Python py = Python.getInstance();
         PyObject add = py.getModule("Notion");
         Log.e("Sending data...",d[0]+" "+d[2]+" "+d[3]+" "+amount);
-        PyObject call = add.callAttr("addRecord", d[0],amount,d[2],d[3]);
+        PyObject call = add.callAttr("addRecord", d[0],amount,d[2],d[3],TOKEN_V2,DB_URL);
         return_value = call.toString();
         return return_value;
 
@@ -127,6 +145,10 @@ public class MainActivity extends AppCompatActivity {
         final String[][] d = {data};
         final String editTextString[] = new String[1];
         final String filename= "Notion.py";
+
+
+        SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
+
 
         final String TOKEN_V2 = getEditor.getString("v2_Token", null);
         final String DB_URL = getEditor.getString("db_URL", null);
@@ -165,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            SharedPreferences.Editor putEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE).edit();
             if(result.equals("Success")) {
                 Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
             }
@@ -172,13 +195,17 @@ public class MainActivity extends AppCompatActivity {
 
                 if(result.equals("V2Error")){
                     Toast.makeText(MainActivity.this, "Your V2 Token is wrong. Please Enter Details again!", Toast.LENGTH_LONG).show();
+                    putEditor.remove("Init");
+                    putEditor.commit();
                     Intent intent = new Intent(MainActivity.this,userDetails.class);
                     startActivityForResult(intent,2);
 
 
                 }
                 else if(result.equals("dbError")){
-                    Toast.makeText(MainActivity.this, "Your db URL is wrong. Please Enter Deatils again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Your db URL is wrong. Please Enter Details again!", Toast.LENGTH_LONG).show();
+                    putEditor.remove("Init");
+                    putEditor.commit();
                     Intent intent = new Intent(MainActivity.this,userDetails.class);
                     startActivityForResult(intent,2);
                 }
