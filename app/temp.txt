@@ -16,3 +16,21 @@ You can read more about this project on my blog:\n\n
 https://medium.com/@prathu10/automating-notion-using-notion-py-fa0f2e8f089e\n\n
 https://medium.com/@prathu10/android-app-for-notion-automation-using-chaquopy-863e72fa4ecd\n\n
 
+A simple application add expenses in the default expense manager template in Notion.
+
+This is a simple application to add your expense to the Notion expense manager database that is created by default.
+The string you input in the form "Expense,Amount,Comment,Tag", date is added automatically.
+The 'Tag' can take value only from the currently existing tags in the database. If you want to create a new tag, create it through notion first,
+and then use it in this app.
+The reason I created this app is I wanted to add expenses quickly like taking a not in Google Keep ot Evernote, but have it formatted in the way
+Notion does. The mobile version in Notion makes it a bit complicated as you have to add each field in the new page that opens when you add a new entry.
+If you use Notion to manage your expenses and want a simple way to add an expense then this app is for you! Enjoy!
+
+I have written a blog about how this app works.
+https://medium.com/@prathu10/automating-notion-using-notion-py-fa0f2e8f089e\n\n
+https://medium.com/@prathu10/android-app-for-notion-automation-using-chaquopy-863e72fa4ecd\n\n
+
+This app is also open-sourced on github.
+This is my first app on the playstore and I am the sole devloper hence this is very much in beta phase.
+I will keep improving it continuously based on feedback I get.
+

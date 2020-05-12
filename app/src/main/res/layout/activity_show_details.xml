@@ -27,7 +27,7 @@
                 android:lineSpacingExtra="8sp"
                 android:paddingLeft="10dp"
                 android:paddingTop="15dp"
-                android:text="Why should I submit my v2 token? \n The library this app uses is called notion-py which a freely available library on pypi.org.\n To connect to your notion account, you need to add your v2 token.\n You can read about it more here- pypi.org/projects/notion"
+                android:text="\tWhy should I submit my v2 token? \n The library this app uses is called notion-py\n\twhich a freely available library on pypi.org.\n To connect to your notion account, you need \n\tto add your v2 token.\n You can read about it more here- \n\tpypi.org/projects/notion"
                 android:textSize="18sp" />
 
             <TextView
@@ -36,14 +36,15 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingTop="15dp"
-                android:text="How can I obtain the v2 token?\n Please see the image below."
+                android:text="\tHow can I obtain the v2 token?\n Please see the image below."
                 android:textSize="18sp" />
 
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="231dp"
+                android:layout_height="582dp"
                 android:paddingTop="20dp"
+                android:scaleY="2.0"
                 app:srcCompat="@drawable/ss_v2" />
 
             <TextView
@@ -52,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="10dp"
                 android:paddingTop="22dp"
-                android:text="How do get the database url?\n To get the database URL\n\n 1. Login to your Notion account\n 2. Open the database that you want to update.\n 3. Copy paste the whole link by double clicking on \n\t\t\t\t\tthe address bar of the browser.\n"
+                android:text="\tHow do get the database url?\n To get the database URL\n\n 1. Login to your Notion account\n 2. Open the database that you want to update.\n 3. Copy paste the whole link by double \n\tclicking on the address bar of the browser.\n"
                 android:textSize="18sp" />
 
             <TextView
