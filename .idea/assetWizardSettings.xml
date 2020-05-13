@@ -94,8 +94,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/Screenshot (19).jpg" />
-                                      <entry key="outputName" value="v2_info" />
+                                      <entry key="iconShape" value="CIRCLE" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icon.jpg" />
+                                      <entry key="outputName" value="app_icon" />
                                     </map>
                                   </option>
                                 </PersistentState>
