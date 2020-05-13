@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 import static java.lang.Boolean.TRUE;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String SAVED_PREFERENCES = "com.example.expensesnotion.savedData";
+    public static final String SAVED_PREFERENCES = "com.pd.expensesnotion.savedData";
 
 
     @Override
