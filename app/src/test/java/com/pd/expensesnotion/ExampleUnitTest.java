@@ -1,4 +1,4 @@
-package com.example.expensesnotion;
+package com.pd.expensesnotion;
 
 import org.junit.Test;
 

@@ -95,7 +95,7 @@
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="iconShape" value="CIRCLE" />
-                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icon.jpg" />
+                                      <entry key="imageAsset" value="$USER_HOME$/Downloads/icon(1).jpg" />
                                       <entry key="outputName" value="app_icon" />
                                     </map>
                                   </option>
