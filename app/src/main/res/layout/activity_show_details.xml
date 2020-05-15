@@ -44,8 +44,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="582dp"
                 android:paddingTop="20dp"
-                android:scaleY="2.0"
-                app:srcCompat="@drawable/ss_v2" />
+                app:srcCompat="@drawable/v1" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/v2" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="484dp"
+                app:srcCompat="@drawable/v3" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select v2 and copy the string in Contents section."
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/dbURL"
