@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String editTextString;
-                int amount;
+                float amount;
                 String d[];
 
                 editTextString = getData.getText().toString();
                 d=editTextString.split(",");
                 Boolean flag=Boolean.TRUE;
                 try {
-                    amount = Integer.parseInt(d[1]);
+                    amount = Float.parseFloat(d[1]);
                 }catch(Exception e){
                     Toast.makeText(MainActivity.this, "Please Enter a number for amount", Toast.LENGTH_LONG).show();
                     flag=Boolean.FALSE;
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private static String viewSource(Context context, String[]d,int amount, Date date,String TOKEN_V2,String DB_URL) throws IOException {
+    private static String viewSource(Context context, String[]d,float amount, Date date,String TOKEN_V2,String DB_URL) throws IOException {
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(context));
         }
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
         Boolean flag=Boolean.FALSE;
 
         final Date[] date = new Date[1];
-        final int amount[] = new int[1];
+        final float amount[] = new float[1];
 
 
         final EditText getData = findViewById(R.id.editText);
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
             getData.setText("");
             d[0] = editTextString[0].split(Pattern.quote(","));
 
-            amount[0] = Integer.parseInt(d[0][1]);
+            amount[0] = Float.parseFloat(d[0][1]);
 
 
             date[0] = Calendar.getInstance().getTime();
