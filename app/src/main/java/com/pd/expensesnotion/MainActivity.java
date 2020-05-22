@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private String[] loadTags(){
 
         String a[] = {""};
-        Log.e("Sending data...","in here");
+
         try{
 
             SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
