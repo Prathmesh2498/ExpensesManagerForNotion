@@ -20,6 +20,15 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:autoLink="web"
+                android:text="Watch a video explaining how to get v2 token and url here. \n https://www.youtube.com/watch?v=wO22a8P1aFI"
+                android:textSize="18sp" />
+
+            <TextView
                 android:id="@+id/V2tokenuse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
