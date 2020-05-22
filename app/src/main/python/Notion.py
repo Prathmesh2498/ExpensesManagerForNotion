@@ -5,6 +5,58 @@ Created on Sat May  3 15:22:31 2020
 @author: Prathmesh D
 """
 
+def getTags(v2, db):
+    from notion.client import NotionClient
+
+    try:
+        client = NotionClient(token_v2=v2)
+        print("Connected")
+
+    except:
+        print("Error v2")
+
+    try:
+        cv = client.get_collection_view(db)
+        print("Connected")
+    except:
+        print("Error db")
+
+    try:
+        values=[]
+        a = cv.collection.get_schema_properties()
+        s = a[2]['id']
+        b=cv.collection.get_schema_property(s)
+        for c in b['options']:
+            values.append(c['value'])
+            print("Added {}".format(c['value']))
+        return values
+    except:
+        return values
+
+
+
+
+
+def checkConnect(v2,db):
+    from notion.client import NotionClient
+
+    s="Success"
+    try:
+            client = NotionClient(token_v2=v2)
+
+    except:
+        s ="V2Error"
+        return s
+
+    try:
+        cv = client.get_collection_view(db)
+
+    except:
+        s="dbError"
+        return s
+
+    return s
+
 def addRecord(Expense,Amount,Comment,Category,v2,db):
     import datetime
     from notion.client import NotionClient

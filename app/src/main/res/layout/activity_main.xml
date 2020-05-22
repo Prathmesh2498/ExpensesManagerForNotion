@@ -6,77 +6,81 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv"
-        android:layout_width="398dp"
-        android:layout_height="216dp"
-        android:layout_marginStart="29dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginBottom="276dp"
-        android:text="Enter your data int the format: Expense,Amount,Comment,Tag \n Example:\nCollege_EXAM_FEES,100,MAY2020,college"
-        android:textColor="#100F0F"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="327dp"
-        android:layout_height="149dp"
-        android:layout_marginStart="42dp"
-        android:layout_marginEnd="42dp"
-        android:ems="10"
-        android:hint="Enter Your Expense Here"
-        android:inputType="textPersonName"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.53" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="327dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="76dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="110dp"
-        android:backgroundTint="#030404"
-        android:text="Submit"
-        android:textColor="#FF5722"
-        android:textColorLink="#050404"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
-        app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/info"
-        android:layout_width="327dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="45dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="39dp"
-        android:layout_marginBottom="128dp"
-        android:backgroundTint="#030404"
-        android:fontFamily="sans-serif-black"
-        android:text="For more info, TAP ME!"
-        android:textColor="#FF5722"
-        android:textColorLink="#050404"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="50dp"
+                android:text="Enter your data int the format: Expense,Amount,Comment,Tag \n Example:\nCollege_EXAM_FEES,100,final year,college"
+                android:textColor="#100F0F"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:paddingBottom="50dp" />
+
+            <TextView
+                android:id="@+id/ld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="clip_vertical|center_horizontal"
+                android:paddingLeft="35dp"
+                android:text="Loading Tags please wait..."
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="match_parent"
+                android:layout_height="149dp"
+                android:layout_marginTop="50dp"
+                android:ems="10"
+                android:gravity="center_horizontal|center_vertical"
+                android:hint="Enter Your Expense Here"
+                android:inputType="textPersonName"
+                android:paddingTop="50dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#030404"
+                android:clickable="false"
+                android:text="Submit"
+                android:textColor="#FF5722"
+                android:textColorLink="#050404"
+                tools:visibility="visible" />
+
+            <Button
+                android:id="@+id/info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#030404"
+                android:fontFamily="sans-serif-black"
+                android:text="For more info, TAP ME!"
+                android:textColor="#FF5722"
+                android:textColorLink="#050404"
+                android:textStyle="bold|italic" />
+
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
