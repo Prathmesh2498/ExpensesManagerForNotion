@@ -46,16 +46,29 @@
                 android:text="Loading Tags please wait..."
                 android:visibility="visible" />
 
+            <Button
+                android:id="@+id/getDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#030404"
+                android:clickable="true"
+                android:ems="10"
+                android:inputType="date"
+                android:singleLine="true"
+                android:textColor="#FF5722" />
+
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="149dp"
+                android:layout_width="426dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:ems="10"
                 android:gravity="center_horizontal|center_vertical"
                 android:hint="Enter Your Expense Here"
                 android:inputType="textPersonName"
-                android:paddingTop="50dp" />
+                android:paddingTop="50dp"
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/button"

@@ -1,5 +1,6 @@
 package com.pd.expensesnotion;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,8 +26,11 @@ import com.chaquo.python.Python;
 import com.chaquo.python.android.AndroidPlatform;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 import static java.lang.Boolean.FALSE;
@@ -34,47 +39,6 @@ import static java.lang.Boolean.TRUE;
 public class MainActivity extends AppCompatActivity {
     public static final String SAVED_PREFERENCES = "com.pd.expensesnotion.savedData";
 
-
-    private String[] loadTags(){
-
-        String a[] = {""};
-
-        try{
-
-            SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
-            final String TOKEN_V2 = getEditor.getString("v2_Token", null);
-            final String DB_URL = getEditor.getString("db_URL", null);
-            Log.e("Sending data...",TOKEN_V2+" "+DB_URL);
-            if (! Python.isStarted()) {
-                Python.start(new AndroidPlatform(MainActivity.this));
-            }
-            //PYTHON CODE
-            Object return_value[];
-            Python py = Python.getInstance();
-            PyObject add = py.getModule("Notion");
-
-            PyObject call = add.callAttr("getTags",TOKEN_V2,DB_URL);
-            return_value = call.asList().toArray();
-            Log.e("Tagsval", Integer.toString(return_value.length));
-
-            if(return_value.length!=0) {
-                String arr[] = new String[return_value.length];
-                for(int i=0;i<return_value.length;i++){
-                    arr[i] = return_value[i].toString();
-                }
-                return arr;
-
-            }
-            else{
-                Log.e("TagsFail","Failed to load");
-            }
-
-        }catch (Exception e){
-
-            Log.e("Error", e.toString());
-        }
-        return a;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +51,35 @@ public class MainActivity extends AppCompatActivity {
         Button updateInfo = findViewById(R.id.up);
         final EditText getData = findViewById(R.id.editText);
         final TextView mTv = findViewById(R.id.ld);
+        final Button getDate = findViewById(R.id.getDate);
+
+        //CODE FOR DATE
+        final Calendar myCalendar = Calendar.getInstance();
+        updateLabel(getDate, myCalendar);
+        final DatePickerDialog.OnDateSetListener dt = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel(getDate, myCalendar);
+            }
+
+        };
+
+
+        getDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(MainActivity.this, dt, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+        //END CODE FOR DATE
+
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private static String viewSource(Context context, String[]d,float amount, Date date,String TOKEN_V2,String DB_URL) throws IOException {
+    private static String viewSource(Context context, String[]d, float amount, String date, String TOKEN_V2, String DB_URL) throws IOException {
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(context));
         }
@@ -209,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
         Python py = Python.getInstance();
         PyObject add = py.getModule("Notion");
         Log.e("Sending data...",d[0]+" "+d[2]+" "+d[3]+" "+amount);
-        PyObject call = add.callAttr("addRecord", d[0],amount,d[2],d[3],TOKEN_V2,DB_URL);
+        PyObject call = add.callAttr("addRecord", d[0],amount,d[2],d[3],date,TOKEN_V2,DB_URL);
         return_value = call.toString();
         return return_value;
 
@@ -220,28 +213,30 @@ public class MainActivity extends AppCompatActivity {
 
         Boolean flag=Boolean.FALSE;
 
-        final Date[] date = new Date[1];
+        String Date;
         final float amount[] = new float[1];
         final String tags[] = new String[100];
         final String arr[][] = {tags};
+        final Button getDate = findViewById(R.id.getDate);
 
         final Button submit = findViewById(R.id.button);
         final EditText getData = findViewById(R.id.editText);
         final TextView tv = findViewById(R.id.tv);
         final TextView load = findViewById(R.id.ld);
+        final Spinner mySpinner = findViewById(R.id.tags);
+
         final String data[] = new String[5];
         final String[][] d = {data};
         final String editTextString[] = new String[1];
         final String filename= "Notion.py";
 
-        final Spinner mySpinner = findViewById(R.id.tags);
+
         SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
-
-
         final String TOKEN_V2 = getEditor.getString("v2_Token", null);
         final String DB_URL = getEditor.getString("db_URL", null);
 
         String returned_value;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -254,9 +249,9 @@ public class MainActivity extends AppCompatActivity {
                 d[0] = editTextString[0].split(Pattern.quote(","));
 
                 amount[0] = Float.parseFloat(d[0][1]);
+                Date = getDate.getText().toString();
 
 
-                date[0] = Calendar.getInstance().getTime();
             }
 
         }
@@ -266,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
             Log.e("params", params[0]);
             if (params[0].equals("Submit")){
                     try {
-                        returned_value = viewSource(MainActivity.this, d[0], amount[0], date[0], TOKEN_V2, DB_URL);
+                        returned_value = viewSource(MainActivity.this, d[0], amount[0], Date, TOKEN_V2, DB_URL);
 
                         return returned_value;
                     } catch (Exception e) {
@@ -300,12 +295,12 @@ public class MainActivity extends AppCompatActivity {
                 ArrayAdapter<String>dataAdapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_spinner_dropdown_item, arr[0]);
                 mySpinner.setAdapter(dataAdapter);
                 submit.setClickable(TRUE);
-                load.setText("Tags Loaded Successfully, You can now add record!");
+                load.setText("Tags Loaded Successfully, You can now add records!");
             }
             else{
 
                 if(result.equals("V2Error")){
-                    Toast.makeText(MainActivity.this, "Your V2 Token is wrong. Please Enter Details again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Your V2 Token is wrong/invalidated. Please Enter Details again!", Toast.LENGTH_LONG).show();
                     putEditor.remove("Init");
                     putEditor.commit();
                     Intent intent = new Intent(MainActivity.this,userDetails.class);
@@ -314,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 else if(result.equals("dbError")){
-                    Toast.makeText(MainActivity.this, "Your db URL is wrong. Please Enter Details again!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Your db URL is wrong/invalidated. Please Enter Details again!", Toast.LENGTH_LONG).show();
                     putEditor.remove("Init");
                     putEditor.commit();
                     Intent intent = new Intent(MainActivity.this,userDetails.class);
@@ -332,6 +327,52 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+    private String[] loadTags(){
+
+        String a[] = {""};
+
+        try{
+
+            SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
+            final String TOKEN_V2 = getEditor.getString("v2_Token", null);
+            final String DB_URL = getEditor.getString("db_URL", null);
+            Log.e("Sending data...",TOKEN_V2+" "+DB_URL);
+            if (! Python.isStarted()) {
+                Python.start(new AndroidPlatform(MainActivity.this));
+            }
+            //PYTHON CODE
+            Object return_value[];
+            Python py = Python.getInstance();
+            PyObject add = py.getModule("Notion");
+
+            PyObject call = add.callAttr("getTags",TOKEN_V2,DB_URL);
+            return_value = call.asList().toArray();
+            Log.e("Tagsval", Integer.toString(return_value.length));
+
+            if(return_value.length!=0) {
+                String arr[] = new String[return_value.length];
+                for(int i=0;i<return_value.length;i++){
+                    arr[i] = return_value[i].toString();
+                }
+                return arr;
+
+            }
+            else{
+                Log.e("TagsFail","Failed to load");
+            }
+
+        }catch (Exception e){
+
+            Log.e("Error", e.toString());
+        }
+        return a;
+    }
+    private void updateLabel(Button getDate, Calendar myCalendar) {
+        String myFormat = "yyyy/MM/dd h:mm a"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+        getDate.setText(sdf.format(myCalendar.getTime()));
     }
 
 }

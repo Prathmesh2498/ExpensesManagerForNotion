@@ -57,11 +57,14 @@ def checkConnect(v2,db):
 
     return s
 
-def addRecord(Expense,Amount,Comment,Category,v2,db):
+def addRecord(Expense,Amount,Comment,Category,D,v2,db):
     import datetime
     from notion.client import NotionClient
-    Date = datetime.datetime.now()
+    #Date = datetime.datetime.now()
 
+    format = '%Y/%m/%d %I:%M %p'
+    Date = datetime.datetime.strptime(D, format)
+    print(type(Date))
     print(v2)
     print(db)
     # Obtain the `token_v2` value by inspecting your browser cookies on a logged-in session on Notion.so
