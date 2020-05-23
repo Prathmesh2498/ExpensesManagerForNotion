@@ -77,6 +77,15 @@ public class userDetails extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent();
+        setResult(RESULT_OK, intent);
+        finish();//finishing activity
+    }
+
     private static String viewSource(Context context, String TOKEN_V2, String DB_URL) throws IOException {
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(context));

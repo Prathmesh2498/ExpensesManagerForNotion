@@ -1,6 +1,7 @@
 package com.pd.expensesnotion;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.chaquo.python.PyObject;
@@ -80,9 +82,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Button submit = findViewById(R.id.button);
-        submit.setClickable(FALSE);
+
         Button info = findViewById(R.id.info);
+        Button updateInfo = findViewById(R.id.up);
         final EditText getData = findViewById(R.id.editText);
+        final TextView mTv = findViewById(R.id.ld);
 
         info.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,20 +96,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //GET V2 and DBUrl
         SharedPreferences getEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE);
-
-
-
         //IF KEY DOES NOT EXIST, IT RETURNS THE VALUE PARAM SO VALUE IS LIKE DEFAULT VALUE
         Boolean  isInitialized = getEditor.getBoolean("Init",Boolean.FALSE);
-
-
 
         if(!isInitialized){
 
             Intent intent = new Intent(MainActivity.this,userDetails.class);
             startActivityForResult(intent,2);
         }
+
+
+       updateInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Are you sure you want to continue?")
+                        .setMessage("This will invalidate current v2 and url")
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                Intent intent = new Intent(MainActivity.this,userDetails.class);
+                                startActivityForResult(intent,2);
+                            }
+                        }).create().show();
+
+
+            }
+        });
 
         try{
             new AsyncCaller().execute("getTags");
@@ -116,28 +137,36 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        submit.setClickable(FALSE);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                String editTextString;
-                float amount;
-                String d[];
+                if((mTv.getText().toString()).equals("Loading Tags please wait...")){
+                    Toast.makeText(MainActivity.this, "Please wait till the tags load!", Toast.LENGTH_LONG).show();
+                }else{
+                    String editTextString;
+                    float amount;
+                    String d[];
 
-                editTextString = getData.getText().toString();
-                d=editTextString.split(",");
-                Boolean flag=Boolean.TRUE;
-                try {
-                    amount = Float.parseFloat(d[1]);
-                }catch(Exception e){
-                    Toast.makeText(MainActivity.this, "Please Enter a number for amount", Toast.LENGTH_LONG).show();
-                    flag=Boolean.FALSE;
+                    editTextString = getData.getText().toString();
+                    d=editTextString.split(",");
+                    Boolean flag=Boolean.TRUE;
+                    try {
+                        amount = Float.parseFloat(d[1]);
+                    }catch(Exception e){
+                        Toast.makeText(MainActivity.this, "Please Enter a number for amount", Toast.LENGTH_LONG).show();
+                        flag=Boolean.FALSE;
+                    }
+
+
+                    if(flag){
+                        new AsyncCaller().execute("Submit");
+                    }
                 }
 
 
-                if(flag){
-                new AsyncCaller().execute("Submit");
-                }
             }
         });
 
@@ -156,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
         String v2_Token;
         String db_URL;
-        if(requestCode==2)
+        if(resultCode==2)
         {
             v2_Token = data.getStringExtra("TOKENv2");
             db_URL = data.getStringExtra("DATABASE_URL");
@@ -166,6 +195,7 @@ public class MainActivity extends AppCompatActivity {
             putEditor.putBoolean("Init", TRUE);
             putEditor.commit();
         }
+
     }
 
 

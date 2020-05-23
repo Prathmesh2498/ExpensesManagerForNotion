@@ -81,6 +81,18 @@
                 android:textColorLink="#050404"
                 android:textStyle="bold|italic" />
 
+            <Button
+                android:id="@+id/up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#030404"
+                android:fontFamily="sans-serif-black"
+                android:text="Update v2 or db_url"
+                android:textColor="#FF5722"
+                android:textColorLink="#050404"
+                android:textStyle="bold|italic" />
+
         </LinearLayout>
     </ScrollView>
 

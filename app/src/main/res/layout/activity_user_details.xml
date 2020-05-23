@@ -6,101 +6,91 @@
     android:layout_height="match_parent"
     tools:context=".userDetails">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="419dp"
-        android:layout_height="98dp"
-        android:layout_marginTop="42dp"
-        android:autoLink="web"
-        android:paddingLeft="10dp"
-        android:text="Watch a video explaining how to get v2 token and url here. \n https://www.youtube.com/watch?v=wO22a8P1aFI"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSubmit" />
-
-    <EditText
-        android:id="@+id/v2"
-        android:layout_width="308dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="234dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="452dp"
-        android:ems="10"
-        android:hint="Enter v2 token here"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/db"
-        android:layout_width="308dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="47dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="335dp"
-        android:ems="10"
-        android:hint="Enter database URL here"
-        android:inputType="textPersonName"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/v2" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/btnSubmit"
-        android:layout_width="136dp"
-        android:layout_height="54dp"
-        android:layout_marginStart="137dp"
-        android:layout_marginTop="63dp"
-        android:layout_marginEnd="138dp"
-        android:backgroundTint="#030404"
-        android:text="Submit"
-        android:textColor="#FF5722"
-        android:textColorLink="#050404"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/db" />
+            <Button
+                android:id="@+id/btnRead"
+                android:layout_width="300dp"
+                android:layout_height="96dp"
+                android:layout_gravity="center|center_horizontal|center_vertical"
+                android:layout_marginStart="55.5dp"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="55.5dp"
+                android:backgroundTint="#030404"
+                android:text="TAP ME FOR MORE INFO!"
+                android:textColor="#FF5722"
+                android:textColorLink="#050404"
+                android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="313dp"
-        android:layout_height="137dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="19dp"
-        android:layout_marginEnd="49dp"
-        android:text="\nThis app uses notion-py library of the pypi.org project. This library requires your v2 token. You can read more about it by tapping the read button above!"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            <EditText
+                android:id="@+id/v2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:layout_marginBottom="452dp"
+                android:ems="10"
+                android:hint="Enter v2 token here"
+                android:inputType="textPersonName"
+                android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/btnRead"
-        android:layout_width="300dp"
-        android:layout_height="96dp"
-        android:layout_marginStart="49dp"
-        android:layout_marginTop="70dp"
-        android:layout_marginEnd="62dp"
-        android:backgroundTint="#030404"
-        android:text="TAP ME FOR MORE INFO!"
-        android:textColor="#FF5722"
-        android:textColorLink="#050404"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <EditText
+                android:id="@+id/db"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-430dp"
+                android:ems="10"
+                android:hint="Enter database URL here"
+                android:inputType="textPersonName"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="136dp"
+                android:layout_height="54dp"
+                android:layout_gravity="clip_horizontal|center|center_horizontal"
+                android:layout_marginStart="137.5dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="137.5dp"
+                android:backgroundTint="#030404"
+                android:text="Submit"
+                android:textColor="#FF5722"
+                android:textColorLink="#050404" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="419dp"
+                android:layout_height="98dp"
+                android:layout_marginTop="42dp"
+                android:autoLink="web"
+                android:gravity="center|clip_vertical|center_horizontal"
+                android:paddingLeft="10dp"
+                android:text="Watch a video explaining how to get v2 token and url here. \n https://www.youtube.com/watch?v=wO22a8P1aFI"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="313dp"
+                android:layout_height="137dp"
+                android:layout_marginStart="49dp"
+                android:layout_marginTop="19dp"
+                android:layout_marginEnd="49dp"
+                android:text="\nThis app uses notion-py library of the pypi.org project. This library requires your v2 token. You can read more about it by tapping the read button above!"
+                android:textAlignment="center"
+                android:textSize="18sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
