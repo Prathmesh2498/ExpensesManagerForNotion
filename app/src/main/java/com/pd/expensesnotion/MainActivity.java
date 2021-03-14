@@ -1,11 +1,15 @@
 package com.pd.expensesnotion;
 
 import android.app.DatePickerDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -20,6 +24,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.chaquo.python.PyObject;
 import com.chaquo.python.Python;
@@ -285,6 +291,10 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
             SharedPreferences.Editor putEditor = getSharedPreferences(SAVED_PREFERENCES, MODE_PRIVATE).edit();
             if(result.equals("Success")) {
+                final String[] msgToNotificationService = new String[2];
+                msgToNotificationService[0] = "Success!";
+                msgToNotificationService[1] = "Data added to Notion, and will be reflected in your database.";
+                addNotification(msgToNotificationService);
                 Toast.makeText(MainActivity.this, result, Toast.LENGTH_SHORT).show();
             }
             else if(result.equals("")){
@@ -305,7 +315,10 @@ public class MainActivity extends AppCompatActivity {
                     putEditor.commit();
                     Intent intent = new Intent(MainActivity.this,userDetails.class);
                     startActivityForResult(intent,2);
-
+                    final String[] msgToNotificationService = new String[2];
+                    msgToNotificationService[0] = "Failed!";
+                    msgToNotificationService[1] = "Your V2 Token might be invalidated. Please check through the browser and update the V2 Token!";
+                    addNotification(msgToNotificationService);
 
                 }
                 else if(result.equals("dbError")){
@@ -313,12 +326,20 @@ public class MainActivity extends AppCompatActivity {
                     putEditor.remove("Init");
                     putEditor.commit();
                     Intent intent = new Intent(MainActivity.this,userDetails.class);
-                    startActivityForResult(intent,2);
+                    startActivityForResult(intent, 2);
+                    final String[] msgToNotificationService = new String[2];
+                    msgToNotificationService[0] = "Failed!";
+                    msgToNotificationService[1] = "Your database URL is invalid. Please check through the browser and update the URL!";
+                    addNotification(msgToNotificationService);
                 }
                 else{
                     String sourceString = "<b>" + result + "</b> " ;
                     tv.setText(Html.fromHtml(sourceString, Html.FROM_HTML_MODE_LEGACY));
                     Toast.makeText(MainActivity.this, "Record Deleted!\nPlease add again.", Toast.LENGTH_LONG).show();
+                    final String[] msgToNotificationService = new String[2];
+                    msgToNotificationService[0] = "Failed!";
+                    msgToNotificationService[1] = "Failed due to internal error. Please contact prathu10@gmail.com";
+                    addNotification(msgToNotificationService);
                 }
 
 
@@ -375,4 +396,35 @@ public class MainActivity extends AppCompatActivity {
         getDate.setText(sdf.format(myCalendar.getTime()));
     }
 
+
+    public void addNotification(String[] msg){
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
+                .setSmallIcon(R.mipmap.app_icon)
+                .setContentTitle(msg[0])
+                .setContentText(msg[1])
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                // Set the intent that will fire when the user taps the notification
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        final int notificationId = 1;
+        createChannel(notificationManager);
+        notificationManager.notify(notificationId, builder.build());
+        Log.e("Notification Status","Done Notifying!");
+    }
+
+    public void createChannel(NotificationManager notificationManager){
+        Log.e("Notification Status",Integer.toString(Build.VERSION.SDK_INT));
+        if (Build.VERSION.SDK_INT < 26) {
+            return;
+        }
+        NotificationChannel channel = new NotificationChannel("1","Default", NotificationManager.IMPORTANCE_HIGH);
+        channel.setDescription("All Notifications come through here");
+        notificationManager.createNotificationChannel(channel);
+    }
 }
