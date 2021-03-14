@@ -9,10 +9,15 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/gradient"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,29 +26,32 @@
 
             <TextView
                 android:id="@+id/tv"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:gravity="center"
-                android:paddingTop="50dp"
-                android:text="Enter your data int the format: Expense,Amount,Comment,Tag \n Example:\nCollege_EXAM_FEES,100,final year,college"
+                android:paddingTop="15dp"
+                android:text="Enter your data in the format:\n Expense Name,Amount,Comment"
                 android:textColor="#100F0F"
-                android:textSize="16sp" />
+                android:textSize="24sp" />
 
             <Spinner
                 android:id="@+id/tags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:gravity="left|center_vertical"
-                android:paddingBottom="50dp" />
+                android:background="#B2BEC0C1" />
 
             <TextView
                 android:id="@+id/ld"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center|center_vertical"
-                android:paddingLeft="35dp"
+                android:layout_marginTop="5dp"
                 android:text="Loading Tags please wait..."
+                android:textAlignment="center"
+                android:textColor="#050505"
+                android:textStyle="bold"
                 android:visibility="visible" />
 
             <Button
@@ -51,60 +59,75 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:backgroundTint="#030404"
+                android:backgroundTint="#B2B6BBBF"
                 android:clickable="true"
                 android:ems="10"
                 android:inputType="date"
                 android:singleLine="true"
-                android:textColor="#FF5722" />
+                android:textColor="#0C0C0C" />
 
             <EditText
                 android:id="@+id/editText"
-                android:layout_width="426dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:ems="10"
                 android:gravity="center_horizontal|center_vertical"
-                android:hint="Enter Your Expense Here"
+                android:hint="Enter Data as:- Biggies,209,Snacks"
                 android:inputType="textPersonName"
                 android:paddingTop="50dp"
-                android:textSize="14sp" />
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:backgroundTint="#030404"
+                android:backgroundTint=" #28a745"
                 android:clickable="false"
+                android:paddingLeft="25px"
                 android:text="Submit"
-                android:textColor="#FF5722"
+                android:textColor="#070707"
                 android:textColorLink="#050404"
+                android:textSize="14sp"
+                android:textStyle="bold"
                 tools:visibility="visible" />
 
-            <Button
-                android:id="@+id/info"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:backgroundTint="#030404"
-                android:fontFamily="sans-serif-black"
-                android:text="For more info, TAP ME!"
-                android:textColor="#FF5722"
-                android:textColorLink="#050404"
-                android:textStyle="bold|italic" />
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/up"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:backgroundTint="#030404"
-                android:fontFamily="sans-serif-black"
-                android:text="Update v2 or db_url"
-                android:textColor="#FF5722"
-                android:textColorLink="#050404"
-                android:textStyle="bold|italic" />
+                <Button
+                    android:id="@+id/up"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#dc3545"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Update v2 or db_url"
+                    android:textColor="#F3EEED"
+                    android:textColorLink="#050404"
+                    android:textStyle="bold|italic" />
+
+                <Button
+                    android:id="@+id/info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#337ab7"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="For more info, TAP ME!"
+                    android:textColor="#FFFFFF"
+                    android:textColorLink="#050404"
+                    android:textStyle="bold|italic" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>

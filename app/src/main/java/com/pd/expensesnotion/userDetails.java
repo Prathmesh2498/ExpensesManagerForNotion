@@ -68,7 +68,7 @@ public class userDetails extends AppCompatActivity {
                         Toast.makeText(userDetails.this, "Invalid V2 Token", Toast.LENGTH_LONG).show();
                     }
                     if(checkValidity.equals("dbError")) {
-                        Toast.makeText(userDetails.this, "Invalid DATABASE_URL Token", Toast.LENGTH_LONG).show();
+                        Toast.makeText(userDetails.this, "Invalid DATABASE_URL", Toast.LENGTH_LONG).show();
                     }
                 }
             }
